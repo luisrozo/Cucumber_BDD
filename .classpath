@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="/home/luis.gonzaga/Documentos/cursos/cursoCucumber/JARs/gherkin-2.12.2.jar"/>
 	<classpathentry kind="lib" path="/home/luis.gonzaga/Documentos/cursos/cursoCucumber/JARs/mockito-core-3.1.0.jar"/>
 	<classpathentry kind="lib" path="/home/luis.gonzaga/Documentos/cursos/cursoCucumber/JARs/selenium-java-3.141.59.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="/home/luis.gonzaga/Documentos/cursos/cursoCucumber/JARs/selenium-server-standalone-3.141.59.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
