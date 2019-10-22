@@ -9,7 +9,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
 		features="projectFeatures",
 		glue="stepDefinitions",
-		tags= {"@Login"}
+		tags= {"~@ignore"}
 		)
 public class LoginRunner {
 

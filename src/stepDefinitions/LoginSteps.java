@@ -1,9 +1,12 @@
 package stepDefinitions;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -37,7 +40,7 @@ public class LoginSteps {
 	
 	@Then("the user should be able to view account balance")
 	public void userViewsAccountBalance() {
-		System.out.println("Step 3: User sees account balance");
+		System.out.println("Last step: User sees account balance");
 		
 		String bodyText = driver.findElement(By.xpath("html/body")).getText();
 		String welcomeMessage = "Logged in successfully";
@@ -75,6 +78,61 @@ public class LoginSteps {
 		String invalidPasswordMessage = "Invalid password, try again!";
 		
 		Assert.assertTrue(bodyText.contains(invalidUserNameMessage) || bodyText.contains(invalidPasswordMessage));
+	}
+	
+	// Scenario 3 specific steps: the user should be able to login
+	
+	@When("^the user enters username as \"(.*)\"$")
+	public void enterUserName(String userName) {
+		System.out.println("Step 2: User enters user name");
+		driver.findElement(By.id("MainContent_txtUserName")).sendKeys(userName);
+	}
+	
+	@And("^the user enters password as \"(.*)\"$")
+	public void enterPassword(String password) {
+		System.out.println("Step 3: User enters password");
+		driver.findElement(By.id("MainContent_txtPassword")).sendKeys(password);
+	}
+	
+	@And("the user clicks on login")
+	public void clickLogin() {
+		System.out.println("Step 4: User clicks on login button");
+		driver.findElement(By.id("MainContent_btnLogin")).click();
+	}
+	
+	// Scenario Outline
+	
+	@When("^the user enters \"(.*)\" and \"(.*)\"$")
+	public void userEntersUserNameAndPassword(String userName, String password) {
+		System.out.println("Step 2: User enters credentials (" + userName + " ; " + password + ")");
+		
+		driver.findElement(By.id("MainContent_txtUserName")).sendKeys(userName);
+		driver.findElement(By.id("MainContent_txtPassword")).sendKeys(password);
+		
+		clickLogin();
+	}
+	
+	// Scenario with local data table
+	
+	@When("the user enters set of username and password")
+	public void userEntersCredentials(DataTable credentials) {
+		System.out.println("Step 2: User enters credentials data table");
+		
+		// Extract data from DataTable to Map and iterate
+		for(Map<String, String> data : credentials.asMaps(String.class, String.class)) {
+			
+			String userName = data.get("username");
+			String password = data.get("password");
+			System.out.println(userName + " | " + password);
+			
+			driver.findElement(By.id("MainContent_txtUserName")).clear();
+			driver.findElement(By.id("MainContent_txtUserName")).sendKeys(userName);
+			driver.findElement(By.id("MainContent_txtPassword")).clear();
+			driver.findElement(By.id("MainContent_txtPassword")).sendKeys(password);
+			clickLogin();
+			userOnLoginPage();
+		}
+			
 	}
 	
 }
